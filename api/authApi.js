@@ -1,0 +1,45 @@
+const router = require('express').Router()
+const { register, login, generateJWT } = require('../services/auth')
+const ERROR = require('../types/error')
+const authMdw = require('../middleware/auth')
+
+router.post('/register', (req, res) => {
+  const { username, password } = req.body
+  console.log(req.body)
+  register(username, password)
+    .then(result => {
+      res.json({ result: result, success: true })
+    })
+    .catch(err => {
+      switch (err.message) {
+        case ERROR.USERNAME_EXISTED:
+          res.status(409).json({ success: false, err: ERROR.USERNAME_EXISTED })
+          break
+        default:
+          res.status(500).json({ success: false, err: ERROR.INTERNAL_ERROR })
+          break
+      }
+    })
+})
+
+router.post('/login', (req, res) => {
+  const { username, password } = req.body
+
+  login(username, password)
+    .then(user => {
+      const token = generateJWT(user)
+      res.json({
+        user: user,
+        token: token
+      })
+    })
+    .catch(err => {
+      res.status(401).json({ success: false, err: err.message })
+    })
+})
+
+router.get('/updateAuth', authMdw(), (req, res) => {
+  res.json({ user: req.user, token: req.token })
+})
+
+module.exports = router
