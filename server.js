@@ -7,12 +7,14 @@ const bodyParser = require('body-parser')
 const router = require('./api/index')
 /*------------------------------------------*/
 
-app.use(router)
-
 //middleware
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
-app.use(cors())
+
+//api
+app.use(router)
+
 
 mongoose.connect(
   process.env.MONGODB_URI ||
