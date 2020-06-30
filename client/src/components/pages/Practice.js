@@ -221,7 +221,7 @@ const Practice = () => {
             <CountdownCircleTimer
               isPlaying={!buttonState}
               duration={300}
-              colors={[['#004777', 0.33], ['#F7B801', 0.33], ['#A30000']]}
+              colors={[['#004777', 0.33]]}
               onComplete={() => {
                 forceSubmit()
                 return [false, 1]
