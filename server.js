@@ -16,13 +16,11 @@ app.use(bodyParser.json())
 //api
 app.use(router)
 
-
 mongoose.connect(
-  process.env.MONGODB_URI ||
-    process.env.MONGODB_URI2,
+  process.env.MONGODB_URI || process.env.MONGODB_URI2,
   {
     useNewUrlParser: true,
-    useCreateIndex : true,
+    useCreateIndex: true,
     useUnifiedTopology: true
   },
   err => {
@@ -36,13 +34,13 @@ mongoose.connect(
 
 //heroku
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('/client/build'))
+  app.use(express.static('client/build'))
+
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html')) // relative path
   })
 }
 
 app.listen(process.env.PORT || 5000, () => {
   console.log(`App is running on ${process.env.PORT} PORT `)
 })
-
