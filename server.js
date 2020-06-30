@@ -7,8 +7,6 @@ const bodyParser = require('body-parser')
 const router = require('./api/index')
 /*------------------------------------------*/
 
-// const PORT = process.env.PORT || 8080
-
 app.use(router)
 
 //middleware
@@ -33,7 +31,6 @@ mongoose.connect(
   }
 )
 
-
 //heroku
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('/client/build'))
@@ -42,8 +39,7 @@ if (process.env.NODE_ENV === 'production') {
   })
 }
 
-
-app.listen(process.env.PORT || 8080, () => {
+app.listen(process.env.PORT || 5000, () => {
   console.log(`App is running on ${process.env.PORT} PORT `)
 })
 
