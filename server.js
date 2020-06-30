@@ -16,7 +16,7 @@ app.use(cors())
 
 mongoose.connect(
   process.env.MONGODB_URI ||
-    'mongodb://dbadmin:01sirensong@ds235947.mlab.com:35947/heroku_g0k2zh6s',
+    process.env.MONGODB_URI2,
   {
     useNewUrlParser: true,
     useCreateIndex : true,
